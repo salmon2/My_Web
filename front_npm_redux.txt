@@ -1,0 +1,10 @@
+npm i redux
+ npm i react-redux
+ npm i next-redux-wrapper
+  npm i axios
+  npm i redux-devtools-extension
+  npm i redux-saga
+
+
+insert into users(email,password,nickname,stnum,major,createdAt,updatedAt)
+values ('asdf','asdf','asdf',1234,'Computer',now(),now())
