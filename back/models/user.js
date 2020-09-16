@@ -1,27 +1,28 @@
-module.exports = (sequelize,DataTypes)=>{
-  return sequelize.define(
-    "user",
-    {
-      email:{
-        type: DataTypes.STRING,
-        allowNull:false,
-      },
-      password:{
-        type: DataTypes.STRING,
-        allowNull:false,
-      },
-      nickname:{
-        type: DataTypes.STRING,
-        allowNull:false,
-      },
-      stnum:{
-        type: DataTypes.STRING,
-        allowNull:false,
-      },
-      major:{
-        type: DataTypes.STRING,
-        allowNull:false,
-      },
-    }
-  );
-}
+module.exports = (sequelize, DataTypes) => {
+  return sequelize.define('user', {
+    name: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+      unique: true,
+    },
+    age: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+    },
+    married: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    comment: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: sequelize.literal('now()'),
+    },
+  }, {
+    timestamps: false,
+  });
+};
