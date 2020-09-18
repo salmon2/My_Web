@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models').User;
+var passport = require('passport');
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -8,18 +10,22 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  res.json('get');
-});
-router.post('/login',async (req, res, next) => {
-  // res.json('post');
-
-  const user = await User.findAll();
-  res.json(user);
-  console.log(req.body);
+  console.log('get')
 });
 
 
+router.post('/login', passport.authenticate('login', 
+),function(req, res) {
+  console.log('hi')
+  res.json({message:"Success"});
+}
 
+)
+
+router.post('/join', passport.authenticate('join',{
+  successRedirect: '/',
+  failureRedirect: '/join'
+}))
 
 
 module.exports = router;

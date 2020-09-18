@@ -15,16 +15,21 @@ function logInAPI(body) {
 	return axios.post('/api/user/login', body) //다른 리소스 간에 자원공유, course orgin
 }
 
+function signupAPI(body){
+	console.log('join_api');
+	console.log('body', body);
+	return axios.post('/api/user/join', body)
+}
 
 function* logIn(action) {
 	console.log('login_saga')
 	console.log('login data : ', action.data)
 	try {
 		const result = yield call(logInAPI, action.data);
-		console.log(result.data);
+		console.log(result);
 		yield put({
 			type: LOG_IN_SUCCESS,	//
-			//data: //result.data,
+			data: null,
 		})	
 	} catch (error) {
 		yield put({
@@ -38,7 +43,7 @@ function* signup(action) {
 	console.log('signup_saga')
 	console.log('action.data not json: ', action.data)
 	try {
-		// const result = yield call(signupAPI, action.data)
+		const result = yield call(signupAPI, action.data)
 		yield put({
 			type: SIGNUP_SUCCESS,
 			data: null

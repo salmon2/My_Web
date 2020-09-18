@@ -74,7 +74,6 @@ const reducer = (state=initialState, action) =>{
               isLoggedIn: false,
           };
       case LOG_IN_SUCCESS:
-        sessionStorage.setItem('user', JSON.stringify(action.data));
         sessionStorage.setItem('islogined', true);
         console.log(JSON.parse(sessionStorage.user));
         return { 
@@ -84,7 +83,7 @@ const reducer = (state=initialState, action) =>{
           isLoggedIn: true,
         }
       case LOG_IN_FAILRUE:
-          console.log('fail');
+          console.log('login_fail');
           return {
               ...state,
               fetchinUpdate: false,
