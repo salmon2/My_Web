@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useSelector } from 'react';
 import AppLayout from '../components/AppRayout';
 import { Card, Tabs, Table, Tab, Button, Accordion } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
 const Home = () =>{
+	const [login,setLogin] = useState(false);
+	useEffect(() => {
+		console.log('hi')
+		setLogin(JSON.parse(sessionStorage.getItem('islogined')));
+	});
 
 
   return (
 		<>
-			<AppLayout>
+			<AppLayout login = {login}>
 				<br />
 					<Accordion defaultActiveKey="0">
 						<Carousel

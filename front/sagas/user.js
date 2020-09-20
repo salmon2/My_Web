@@ -26,15 +26,15 @@ function* logIn(action) {
 	console.log('login data : ', action.data)
 	try {
 		const result = yield call(logInAPI, action.data);
-		console.log(result);
+		console.log(result.data);
 		yield put({
-			type: LOG_IN_SUCCESS,	//
-			data: null,
-		})	
-	} catch (error) {
+			type:LOG_IN_SUCCESS,
+			data:null,
+		})
+	} catch (err) {
 		yield put({
-			type: LOG_IN_FAILRUE,
-			error: 'error'
+			type:LOG_IN_FAILRUE,
+			data:null,
 		})
 	}
 }

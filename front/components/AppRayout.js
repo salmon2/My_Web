@@ -2,14 +2,26 @@ import React, {useState,useEffect} from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import { Navbar, Nav, Form, Button, FormControl, Container, Row, Col, Card } from 'react-bootstrap'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { logOutAction } from '../reducers/user'
 const StyledButton = styled(Button)`
     margin-left: 30px;
 `;
 
-const AppLayout = ({ children }) => {
+const AppLayout = ({ children}) => {
+	const dispatch = useDispatch();;
+	const [login,setLogin] = useState(false);
+	const {user} = useSelector(state=>state.user);
 
-	const [islogined,setLogin] = useState(false);
+	const Logout = () => {
+		dispatch(logOutAction());
+		setLogin(JSON.parse(sessionStorage.getItem('islogined')));
+	}
+
+	useEffect(() => {
+		console.log('hi')
+		setLogin(JSON.parse(sessionStorage.getItem('islogined')));
+	});
 
 
 	return(
@@ -22,8 +34,8 @@ const AppLayout = ({ children }) => {
 						<Nav.Link href="/Review">강의후기</Nav.Link>
 						<Nav.Link href="/TimeTable">시간표</Nav.Link>
 					</Nav>
-				{!islogined ? <Link href="./login"><a><StyledButton variant="outline-primary">로그인</StyledButton></a></Link>
-				: <Link href="./login"><a><StyledButton variant="outline-primary" onClick = {Logout}>로그아웃</StyledButton></a></Link>}
+				{!login ? <Link href="./login"><a><StyledButton variant="outline-primary">로그인</StyledButton></a></Link>
+				: <StyledButton variant="outline-primary" onClick = {Logout}>로그아웃</StyledButton>}
 			</Navbar>
 
 			<Container fluid>
@@ -35,7 +47,7 @@ const AppLayout = ({ children }) => {
 					</Col>
 					<Col xs={3} style={{padding:"0px"}}>
 						<Row>
-							{islogined ? <Card style={{ width: '18rem', marginTop: "10px", position: "fixed" }}>
+							{login ? <Card style={{ width: '18rem', marginTop: "10px", position: "fixed" }}>
 								<Card.Img variant="top" src="/cat.png" />
 								<Card.Body>
 									<Card.Title>사용자이름</Card.Title>

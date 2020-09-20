@@ -75,7 +75,7 @@ const reducer = (state=initialState, action) =>{
           };
       case LOG_IN_SUCCESS:
         sessionStorage.setItem('islogined', true);
-        console.log(JSON.parse(sessionStorage.user));
+        console.log('login_success')
         return { 
           ...state,
           user : action.data,
@@ -98,7 +98,6 @@ const reducer = (state=initialState, action) =>{
         }
       case SIGNUP_SUCCESS:
           console.log('signup_success')
-          console.log('signup_' + JSON.stringify(action.data));
           alert('signup_success')
           Router.push("/login")
           return{
@@ -107,7 +106,6 @@ const reducer = (state=initialState, action) =>{
         }
       case SIGNUP_FAILRUE:
         console.log('signup_fail')
-        console.log('signup_' + JSON.stringify(action.data));
         alert('signup_fail')
         Router.push("/signup")
         return{
@@ -140,7 +138,6 @@ const reducer = (state=initialState, action) =>{
 
       case LOG_OUT:
         sessionStorage.setItem('islogined', false);
-        sessionStorage.removeItem('user');
         return {
             ...state,
             isLoggedIn: false,

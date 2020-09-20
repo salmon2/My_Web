@@ -17,7 +17,7 @@ const StyledButton = styled(Button)`
    margin-right: 10px;
 `
 const login = () => {
-  const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
 	const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const login = () => {
 		(e) => {
             e.preventDefault()
             dispatch(logInAction({email, password}))
-            Router.push("/")
+            Router.push('/')
         },
 		[email, password],
     )
