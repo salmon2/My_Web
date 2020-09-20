@@ -14,14 +14,12 @@ router.get('/login', function(req, res, next) {
 });
 
 
-router.post('/login', async (req, res, next )=>{
-  passport.authenticate('login', function(err, user, info) {
-    console.log('routes : ',user)
-    if (err) { return next(err) }
-    if (!user) { return res.status(404).json( { message: info.message }) }
-    res.status(200).json(user);
-  })(req, res, next);   
-});
+
+
+router.post('/login', passport.authenticate('login',{
+  successRedirect: '/',
+  failureRedirect: '/login'
+}))
 
 router.post('/join', passport.authenticate('join',{
   successRedirect: '/',

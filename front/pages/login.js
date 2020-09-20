@@ -1,6 +1,8 @@
-import React, { useState, useCallback} from 'react';
+import React, { useState, useCallback, useEffect, } from 'react';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components'
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
 import { Card } from 'react-bootstrap';
@@ -40,7 +42,6 @@ const login = () => {
 		(e) => {
             e.preventDefault()
             dispatch(logInAction({email, password}))
-            Router.push('/')
         },
 		[email, password],
     )

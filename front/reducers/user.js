@@ -18,11 +18,6 @@ export const LOG_IN_REQUEST = 'LOG_IN_REQUEST'
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS'
 export const LOG_IN_FAILRUE = 'LOG_IN_FAILRUE'
 
-export const USER_REQUEST = 'USER_REQUEST'
-export const USER_SUCCESS = 'USER_SUCCESS'
-export const USER_FAILRUE = 'USER_FAILRUE'
-
-
 
 export const SIGNUP_REQUEST = 'SIGNUP_REQUEST'
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
@@ -36,13 +31,6 @@ export const logInAction = (data) => {
   return {
     type: LOG_IN_REQUEST,
     data: data
-  }
-}
-
-export const userAction = (data) =>{
-  return {
-    type: USER_REQUEST,
-    data: data,
   }
 }
 
@@ -75,7 +63,7 @@ const reducer = (state=initialState, action) =>{
           };
       case LOG_IN_SUCCESS:
         sessionStorage.setItem('islogined', true);
-        console.log('login_success')
+        Router.push('/');
         return { 
           ...state,
           user : action.data,
@@ -83,7 +71,7 @@ const reducer = (state=initialState, action) =>{
           isLoggedIn: true,
         }
       case LOG_IN_FAILRUE:
-          console.log('login_fail');
+          console.log('fail');
           return {
               ...state,
               fetchinUpdate: false,
@@ -98,6 +86,7 @@ const reducer = (state=initialState, action) =>{
         }
       case SIGNUP_SUCCESS:
           console.log('signup_success')
+          console.log('signup_' + JSON.stringify(action.data));
           alert('signup_success')
           Router.push("/login")
           return{
@@ -106,6 +95,7 @@ const reducer = (state=initialState, action) =>{
         }
       case SIGNUP_FAILRUE:
         console.log('signup_fail')
+        console.log('signup_' + JSON.stringify(action.data));
         alert('signup_fail')
         Router.push("/signup")
         return{
@@ -113,31 +103,10 @@ const reducer = (state=initialState, action) =>{
           fetchinUpdate:false,
          }
 
-         
-      case USER_REQUEST:
-        return{
-          ...state,
-          fetchinUpdate:true,
-        }
-      case USER_SUCCESS:
-        sessionStorage.setItem('writerinfo', JSON.stringify(action.data));
-        console.log(JSON.parse(sessionStorage.getItem('writerinfo')));
-        return{
-          ...state,
-          fetchinUpdate:false,
-        }
-      case USER_FAILRUE:
-        alert('userloading fail');
-        return{
-          ...state,
-          fetchinUpdate:false,
-        }
-
-
-
 
       case LOG_OUT:
         sessionStorage.setItem('islogined', false);
+        sessionStorage.removeItem('user');
         return {
             ...state,
             isLoggedIn: false,

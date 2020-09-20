@@ -1,8 +1,8 @@
 import { all, fork, call, put, takeLatest } from 'redux-saga/effects'
-import {LOG_IN_FAILRUE, LOG_IN_SUCCESS, LOG_IN_REQUEST, SIGNUP_REQUEST,SIGNUP_FAILRUE, SIGNUP_SUCCESSUSER_REQUEST
-	,USER_SUCCESS
-	,USER_FAILRUE
-	,USER_REQUEST
+import {
+	LOG_IN_FAILRUE, LOG_IN_SUCCESS, LOG_IN_REQUEST, 
+	SIGNUP_REQUEST,SIGNUP_FAILRUE, SIGNUP_SUCCESS,
+	USER_SUCCESS,USER_FAILRUE,USER_REQUEST
 	} from '../reducers/user'
 
 import axios from 'axios'
@@ -44,14 +44,16 @@ function* signup(action) {
 	console.log('action.data not json: ', action.data)
 	try {
 		const result = yield call(signupAPI, action.data)
+		console.log(result.data)
 		yield put({
 			type: SIGNUP_SUCCESS,
 			data: null
 		})	
+		console.log('hello')
 	} catch (error) {
 		yield put({
 			type: SIGNUP_FAILRUE,
-			error: error.response.data
+			error: null,
 		})
 	}
 }
