@@ -10,26 +10,24 @@ import axios from 'axios'
 axios.defaults.baseURL="http://localhost:7000"
 
 function logInAPI(body) {
-	console.log('login_api');
-	console.log('body', body);
 	return axios.post('/api/user/login', body) //다른 리소스 간에 자원공유, course orgin
 }
 
 function signupAPI(body){
-	console.log('join_api');
-	console.log('body', body);
 	return axios.post('/api/user/join', body)
 }
 
+function infoAPI(body){
+	console.log(body);
+	return axios.get('/api/user/id',{params:{id:body}});
+}
+
 function* logIn(action) {
-	console.log('login_saga')
-	console.log('login data : ', action.data)
 	try {
 		const result = yield call(logInAPI, action.data);
-		console.log(result.data);
 		yield put({
 			type:LOG_IN_SUCCESS,
-			data:null,
+			data:result.data,
 		})
 	} catch (err) {
 		yield put({
@@ -40,16 +38,12 @@ function* logIn(action) {
 }
 
 function* signup(action) {
-	console.log('signup_saga')
-	console.log('action.data not json: ', action.data)
 	try {
 		const result = yield call(signupAPI, action.data)
-		console.log(result.data)
 		yield put({
 			type: SIGNUP_SUCCESS,
 			data: null
 		})	
-		console.log('hello')
 	} catch (error) {
 		yield put({
 			type: SIGNUP_FAILRUE,
@@ -57,7 +51,22 @@ function* signup(action) {
 		})
 	}
 }
-
+function* info(action) {
+	console.log(action.data);
+	try {
+		const result = yield call(infoAPI, action.data);
+		console.log(result.data);
+		yield put({
+			type:USER_SUCCESS,
+			data:result.data,
+		})
+	} catch (err) {
+		yield put({
+			type:USER_FAILRUE,
+			data:null,
+		})
+	}
+}
 function* watchLogIn() {
 	yield takeLatest(LOG_IN_REQUEST, logIn)
 }
@@ -65,10 +74,14 @@ function* watchLogIn() {
 function* watchSignup(){
 	yield takeLatest(SIGNUP_REQUEST, signup)
 }
+function* watchInfo(){
+	yield takeLatest(USER_REQUEST, info)
+}
 
 export default function* userSaga() {
 	yield all([
 		fork(watchLogIn),
 		fork(watchSignup),
+		fork(watchInfo),
 	])
 }

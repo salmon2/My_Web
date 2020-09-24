@@ -1,18 +1,23 @@
-import React, { useState, useEffect,useSelector } from 'react';
+import React, { useState, useEffect} from 'react';
 import AppLayout from '../components/AppRayout';
 import { Card, Tabs, Table, Tab, Button, Accordion } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
-const Home = () =>{
-	const [login,setLogin] = useState(false);
-	useEffect(() => {
-		console.log('hi')
-		setLogin(JSON.parse(sessionStorage.getItem('islogined')));
-	});
+import { useSelector, useDispatch } from 'react-redux';
+import { InfoAction } from '../reducers/user'
 
+
+
+const Home = () =>{
+	const dispatch = useDispatch();
+	const [login,setLogin] = useState(false);
+	const user = useSelector(state=>state.user.user);
+	useEffect(() => {
+		dispatch(InfoAction(JSON.parse(sessionStorage.getItem('userid')))); //변하고 바로 보이지 않는다.
+	}, []);
 
   return (
 		<>
-			<AppLayout login = {login}>
+			<AppLayout>
 				<br />
 					<Accordion defaultActiveKey="0">
 						<Carousel

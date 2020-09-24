@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Navbar, Nav, Form, Button, FormControl, Container, Row, Col, Card } from 'react-bootstrap'
 
 //import { setTest } from '../reducers/test'
-import { logOutAction } from '../reducers/user'
+import { logOutAction, InfoAction } from '../reducers/user'
 
 const StyledButton = styled(Button)`
     margin-left: 30px;
@@ -16,16 +16,14 @@ const StyledButton = styled(Button)`
 const AppLayout = ({ children }) => {
 	const dispatch = useDispatch();
 	const [islogined, setLogin] = useState(false);
-	const user = useSelector(state=>state.user.user);
+
 
 	const Logout = () => {
 		dispatch(logOutAction());
 		setLogin(JSON.parse(sessionStorage.getItem('islogined')));
-		
 	}
 
 	useEffect(() => {
-		console.log('login_localStorage   '+ JSON.parse(sessionStorage.getItem('islogined')))
 		setLogin(JSON.parse(sessionStorage.getItem('islogined')));
 	}, []);
 	
